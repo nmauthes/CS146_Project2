@@ -16,7 +16,7 @@ public class BinarySearchTree<E> {
 	
 	}
 	
-	public int getHeight() {
+	public int height() {
 		return treeHeight;
 	}
 	
