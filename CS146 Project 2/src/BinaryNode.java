@@ -1,28 +1,25 @@
 
-public class BinaryNode<E> {
+public class BinaryNode<E extends Comparable<? super E>> {
 		
-	public int data;
-	public BinaryNode leftChild, rightChild;
+	protected E data;
+	protected BinaryNode<E> left, right;
+	//private int height;
 	
-	public BinaryNode(E data, BinaryNode lft, BinaryNode rt) {
+	protected BinaryNode(E d, BinaryNode lft, BinaryNode rt) {
 		data = d;
-		leftChild = lft;
-		rightChild = rt;
+		left = lft;
+		right = rt;
 	}
 	
-//	public BinaryNode() {
-//		this(null, null, null);
-//	}
-	
 	public BinaryNode<E> getLeft() {
-	
+		return left;
 	}
 	
 	public BinaryNode<E> getRight() {
-		
+		return right;
 	}
 	
-	public BinaryNode<E> getData() {
-	
+	public E getData() {
+		return data;
 	}
 }
