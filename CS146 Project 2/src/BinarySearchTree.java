@@ -6,7 +6,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 	
 	public BinarySearchTree() {
 		root = null;
-		height = 1;
+		height = -1;
 	}
 	
 	public void insert(E e) {
