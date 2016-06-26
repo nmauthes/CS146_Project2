@@ -6,6 +6,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 	
 	public BinarySearchTree() {
 		root = null;
+		height = 1;
 	}
 	
 	public void insert(E e) {
@@ -17,8 +18,6 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 			return new BinaryNode<E>(e, null, null);
 		
 		int comparison = e.compareTo(node.data);
-		
-		//System.out.println(comparison);
 		
 		if(comparison < 0)
 			node.left = insert(e, node.left);
@@ -40,8 +39,6 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 		
 		int comparison = e.compareTo(node.data);
 		
-		//System.out.println(comparison);
-		
 		if(comparison < 0)
 			return contains(e, node.left);
 		else if(comparison > 0)
@@ -55,7 +52,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 	}
 	
 	protected BinaryNode<E> remove(E e, BinaryNode<E> node) {
-		if(root == null)
+		if(node == null)
 			return null;
 			
 		int comparison = e.compareTo(node.data);
@@ -66,7 +63,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 			node.right = remove(e, node.right);
 		else if(node.left != null && node.right != null) {
 			node.data = findMin(node.right).data;
-			node.right = remove(e, node.right);
+			node.right = remove(node.data, node.right);
 		}
 		else
 			node = (node.left != null) ? node.left : node.right;
@@ -112,7 +109,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 			return;
 		
 		printContents(node.left);
-		System.out.print(node.data);
+		System.out.println(node.data);
 		printContents(node.right);
 	}
 		

@@ -3,12 +3,13 @@ public class BinaryNode<E extends Comparable<? super E>> {
 		
 	protected E data;
 	protected BinaryNode<E> left, right;
-	//private int height;
+	protected int height;
 	
 	protected BinaryNode(E d, BinaryNode lft, BinaryNode rt) {
 		data = d;
 		left = lft;
 		right = rt;
+		height = 0;
 	}
 	
 	public BinaryNode<E> getLeft() {
