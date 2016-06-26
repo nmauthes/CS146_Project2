@@ -13,9 +13,8 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 	}
 	
 	protected BinaryNode<E> insert(E e, BinaryNode<E> node) {
-		if(node == null) {
+		if(node == null)
 			return new BinaryNode<E>(e, null, null);
-		}
 		
 		int comparison = e.compareTo(node.data);
 		
@@ -51,8 +50,44 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 			return true;
 	}
 	
-	public boolean remove(E e) {
-		return false;
+	public void remove(E e) {
+		root = remove(e, root);
+	}
+	
+	protected BinaryNode<E> remove(E e, BinaryNode<E> node) {
+		if(root == null)
+			return null;
+			
+		int comparison = e.compareTo(node.data);
+		
+		if(comparison < 0)
+			node.left = remove(e, node.left);
+		else if(comparison > 0)
+			node.right = remove(e, node.right);
+		else if(node.left != null && node.right != null) {
+			node.data = findMin(node.right).data;
+			node.right = remove(e, node.right);
+		}
+		else
+			node = (node.left != null) ? node.left : node.right;
+			
+		return node;
+	}
+	
+	protected BinaryNode<E> findMin(BinaryNode<E> node) {
+		if(node == null)
+			return null;
+		else if(node.left == null)
+			return node;
+		return findMin(node.left);
+	}
+	
+	protected BinaryNode<E> findMax(BinaryNode<E> node) {
+		if(node == null)
+			return node;
+		else if(node.right == null)
+			return node;
+		return findMax(node.right);
 	}
 	
 	public int height() {
