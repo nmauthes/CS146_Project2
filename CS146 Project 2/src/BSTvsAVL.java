@@ -1,26 +1,30 @@
+import java.util.Random;
 
 public class BSTvsAVL {
 	public static void main(String[] args) {
 		BinarySearchTree<Integer> bst = new BinarySearchTree<Integer>();
-		TreePrinter printer = new TreePrinter(bst);
+		Random rand = new Random();
 		
-		bst.printRoot();
+		//bst.printRoot();
 		
 //		for(int i = 1; i <= 3; i++) {
 //			bst.insert(i);
 //			bst.printRoot();
 //		}
 
-		bst.insert(2);
-		bst.insert(3);
-		bst.insert(1);
+		while(bst.height != 5) {
+			bst.insert(rand.nextInt(89) + 10);
+		}
+		
+		System.out.println(bst.height());
 		
 		
 		//bst.remove(2);
 		//bst.printRoot();
 		
-		bst.printContents();
+		//bst.printContents();
 		
+		TreePrinter printer = new TreePrinter(bst);
 		printer.print("Test");
 	}
 }

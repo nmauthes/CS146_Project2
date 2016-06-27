@@ -1,4 +1,3 @@
-
 public class BinarySearchTree<E extends Comparable<? super E>> {
 	
 	protected BinaryNode<E> root;
@@ -11,6 +10,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 	
 	public void insert(E e) {
 		root = insert(e, root);
+		height = getHeight(root);
 	}
 	
 	protected BinaryNode<E> insert(E e, BinaryNode<E> node) {
@@ -49,6 +49,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 	
 	public void remove(E e) {
 		root = remove(e, root);
+		height = getHeight(root);
 	}
 	
 	protected BinaryNode<E> remove(E e, BinaryNode<E> node) {
@@ -85,6 +86,13 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 		else if(node.right == null)
 			return node;
 		return findMax(node.right);
+	}
+	
+	protected int getHeight(BinaryNode<E> node) {
+		if(node == null)
+			return -1;
+		else
+			return 1 + Math.max(getHeight(node.left), getHeight(node.right));
 	}
 	
 	public int height() {
