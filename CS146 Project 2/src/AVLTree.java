@@ -1,4 +1,4 @@
 
-public class AVLTree extends BinarySearchTree {
-
+public class AVLTree<E extends Comparable<? super E>> extends BinarySearchTree<E> {
+	
 }

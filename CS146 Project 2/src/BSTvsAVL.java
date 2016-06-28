@@ -13,10 +13,10 @@ public class BSTvsAVL {
 //		}
 
 		while(bst.height != 5) {
-			bst.insert(rand.nextInt(89) + 10);
+			bst.insert(rand.nextInt(90) + 10);
 		}
 		
-		System.out.println(bst.height());
+		System.out.println(bst.contains(50));
 		
 		
 		//bst.remove(2);
