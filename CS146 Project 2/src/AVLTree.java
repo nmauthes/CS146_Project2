@@ -1,11 +1,11 @@
 
 public class AVLTree<E extends Comparable<? super E>> extends BinarySearchTree<E> {
 
-	private final boolean PRINT_ROTATIONS = true;
+	private final boolean PRINT_ROTATIONS = false;
 	
 	public void insert(E e) {
 		root = insert(e, root);
-		height = root.height;
+		height = (root != null) ? root.height : -1;
 	}
 	
 	protected BinaryNode<E> insert(E e, BinaryNode<E> node) {
@@ -15,7 +15,7 @@ public class AVLTree<E extends Comparable<? super E>> extends BinarySearchTree<E
 	
 	public void remove(E e) {
 		root = remove(e, root);
-		height = root.height;
+		height = (root != null) ? root.height : -1;
 	}
 	
 	protected BinaryNode<E> remove(E e, BinaryNode<E> node) {

@@ -16,14 +16,20 @@ public class BSTvsAVL {
 		while(avl.height != 5) {
 			avl.insert(rand.nextInt(90) + 10);
 		}
-		
+//		
 //		System.out.println(avl.contains(50));
 		
 //		avl.insert(5);
-//		avl.insert(3);
 //		avl.insert(4);
+//		avl.insert(6);
+//		avl.insert(7);
+//		
+//		avl.remove(5);
+//		avl.remove(6);
+//		avl.remove(7);
+//		avl.remove(4);
 		
-//		System.out.println(avl.root.height);
+		//System.out.println(avl.height());
 		
 		//avl.remove(2);
 		//avl.printRoot();
