@@ -54,7 +54,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 	
 	protected BinaryNode<E> remove(E e, BinaryNode<E> node) {
 		if(node == null)
-			return null;
+			return node;
 			
 		int comparison = e.compareTo(node.data);
 		
@@ -74,7 +74,7 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 	
 	protected BinaryNode<E> findMin(BinaryNode<E> node) {
 		if(node == null)
-			return null;
+			return node;
 		else if(node.left == null)
 			return node;
 		return findMin(node.left);
@@ -105,11 +105,6 @@ public class BinarySearchTree<E extends Comparable<? super E>> {
 	
 	public void printContents() {
 		printContents(root);
-	}
-	
-	public void printRoot() {
-		String printVal = (root != null) ? root.data.toString() : "null";
-		System.out.println(printVal);
 	}
 	
 	protected void printContents(BinaryNode<E> node) {
