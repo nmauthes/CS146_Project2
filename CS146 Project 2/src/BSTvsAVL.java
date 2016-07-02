@@ -78,13 +78,13 @@ public class BSTvsAVL {
 	}
 	
 	/**
-	 * This method does the same thing as the timeBST method except this is for AVL. PRINT_ROTATIONS
+	 * This method does the same thing as the timeBST method except this is for AVL. printRotations
 	 * needs to be set to false first so the rotations that occurs during insertion will not print
 	 * since all we want to display is the string with the time. It is return back to true before
 	 * we return.
 	 */
 	public static void timeAVL(AVLTree<Integer> tree, int nodes) {
-		tree.PRINT_ROTATIONS = false;
+		tree.printRotations = false;
 		
 		long startTime = System.nanoTime();
 		for (int i = 0; i < nodes; i++) {
@@ -96,7 +96,7 @@ public class BSTvsAVL {
 		System.out.println("Time to fill AVL with " + nodes + " element"
 				+ " is "+ time + " milliseconds.");		
 		
-		tree.PRINT_ROTATIONS = true;
+		tree.printRotations = true;
 		return;
 		
 	}
