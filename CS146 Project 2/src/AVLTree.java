@@ -1,7 +1,6 @@
-
 public class AVLTree<E extends Comparable<? super E>> extends BinarySearchTree<E> {
 
-	private final boolean PRINT_ROTATIONS = false;
+	protected boolean PRINT_ROTATIONS = true;
 	
 	public void insert(E e) {
 		root = insert(e, root);
