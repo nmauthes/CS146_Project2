@@ -111,25 +111,15 @@ public class BSTvsAVL {
 	 * This is to show the user the ratio of insert to contains performed, then the speed will
 	 * be printed in main so users can compare speed between BST and AVL random insert and contains
 	 */
-	public static double timeBSTInsert(BinarySearchTree<Integer> tree, int node, int choice
-			, int stop) {
+	public static double timeBSTInsert(BinarySearchTree<Integer> tree, int choice) {
 		long startTime;
 		if (choice == 0) {
 			startTime = System.nanoTime();
 			tree.insert(randomizer() );
-			insertCount++;
 		}
 		else {
 			startTime = System.nanoTime();
 			tree.contains(randomizer() );
-			containCount++;
-		}
-				
-		if (insertCount + containCount == stop) {
-			System.out.println("Contain count: " + containCount + " | Insert count: " + insertCount);
-			System.out.println("Total: " + stop + " times");
-			containCount = 0;
-			insertCount = 0;
 		}
 		long endTime = System.nanoTime();
 		return (endTime - startTime) / 1000000.0;
@@ -141,7 +131,7 @@ public class BSTvsAVL {
 	 * be the same number of times and same ratio as the BST. The total speed will also
 	 * be printed in main, like the timeAVLInsert method.
 	 */
-	public static double timeAVLInsert(AVLTree<Integer> tree, int node, int choice) {
+	public static double timeAVLInsert(AVLTree<Integer> tree, int choice) {
 		long startTime;
 		if (choice == 0) {
 			startTime = System.nanoTime();
@@ -200,25 +190,34 @@ public class BSTvsAVL {
 			k*=10;
 		}
 		
-		k = 100000;
+		k = 1000000;
+		double ratio = 0.01;
+		double inc = ratio;
 		
-		for (int x = 0; x < 50; x++) {
+		while(ratio < 1) {
 			BinarySearchTree<Integer> bstTime = new BinarySearchTree<Integer>();
 			AVLTree<Integer> avlTime = new AVLTree<Integer>();
 			avlTime.printRotations = false;
 			
-			for (int i = 0; i < k; i++) {
-				int choice = (int) (Math.random() + 0.5);
-				BSTTime += timeBSTInsert(bstTime, randomizer() , choice, k );
-				AVLTime += timeAVLInsert(avlTime, randomizer() , choice);
+			for (int i = 0; i < ratio * k; i++) {
+				BSTTime += timeBSTInsert(bstTime, 0 );
+				AVLTime += timeAVLInsert(avlTime, 0);
 			}
 			
+			for (int i = 0; i < k - (ratio * k); i++) {
+				BSTTime += timeBSTInsert(bstTime, 1 );
+				AVLTime += timeAVLInsert(avlTime, 1);
+			}
+			
+			System.out.println("Insert: " + (int)(ratio * k) + " Contains: " + (int)(k - (ratio * k)));
 			System.out.println("Time to randomly insert or contain for BST: " + BSTTime);
 			System.out.println("Time to randomly insert or contain for AVL: " + AVLTime);
 			System.out.println();
 			BSTTime = 0;
 			AVLTime = 0;
 			avlTime.printRotations = true;
+			
+			ratio += inc;
 		}
 		
 	}
