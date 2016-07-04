@@ -1,4 +1,5 @@
 public class BSTvsAVL {
+	static int insertCount = 0, containCount = 0;
 
 	public static int randomizer() {
 		int random = (int) (Math.random() * 89 + 10);
@@ -50,10 +51,12 @@ public class BSTvsAVL {
 	 * This method works exactly the same as the deleteAll method for BinarySearchTree
 	 * except this is for AVL Tree.
 	 */
-	public static void deleteAll( AVLTree<Integer> bst) {
-		while (bst.root != null) {
-			bst.remove(bst.root.data);
-			TreePrinter printTree = new TreePrinter(bst);
+	public static void deleteAll( AVLTree<Integer> avl) {
+		while (avl.root != null) {
+			avl.remove(avl.root.data);
+			if (avl.root == null)
+				break;
+			TreePrinter printTree = new TreePrinter(avl);
 			printTree.print("AVL Tree Delete");
 		}
 	}
@@ -101,6 +104,57 @@ public class BSTvsAVL {
 		
 	}
 	
+	/**
+	 * This method well randomly perform an insert or contain method depending on what was
+	 * randomly decided. Once this is occurred a set number of time, the number of inserts
+	 * and contains performed will be printed, as well as total number of both actions performed.
+	 * This is to show the user the ratio of insert to contains performed, then the speed will
+	 * be printed in main so users can compare speed between BST and AVL random insert and contains
+	 */
+	public static double timeBSTInsert(BinarySearchTree<Integer> tree, int node, int choice
+			, int stop) {
+		long startTime;
+		if (choice == 0) {
+			startTime = System.nanoTime();
+			tree.insert(randomizer() );
+			insertCount++;
+		}
+		else {
+			startTime = System.nanoTime();
+			tree.contains(randomizer() );
+			containCount++;
+		}
+				
+		if (insertCount + containCount == stop) {
+			System.out.println("Contain count: " + containCount + " | Insert count: " + insertCount);
+			System.out.println("Total: " + stop + " times");
+			containCount = 0;
+			insertCount = 0;
+		}
+		long endTime = System.nanoTime();
+		return (endTime - startTime) / 1000000.0;
+	}
+	
+	/**
+	 * This method will randomly insert or contains similar to the timeBSTInsert method
+	 * previously mentioned, but will not print the number of occurrences since it will
+	 * be the same number of times and same ratio as the BST. The total speed will also
+	 * be printed in main, like the timeAVLInsert method.
+	 */
+	public static double timeAVLInsert(AVLTree<Integer> tree, int node, int choice) {
+		long startTime;
+		if (choice == 0) {
+			startTime = System.nanoTime();
+			tree.insert(randomizer() );
+		}
+		else {
+			startTime = System.nanoTime();
+			tree.contains(randomizer() );
+		}
+				
+		long endTime = System.nanoTime();
+		return (endTime - startTime) / 1000000.0;
+	}
 	
 	public static void main(String[] args) {
 		final int BSTHeight = 5;
@@ -108,93 +162,64 @@ public class BSTvsAVL {
 		int k = 1000;
 		long startTime, endTime;
 		double totalTime;
+		double BSTTime = 0, AVLTime = 0;
 		BinarySearchTree<Integer> bst = new BinarySearchTree<Integer>();
-		AVLTree<Integer> bst2 = new AVLTree<Integer>();
+		AVLTree<Integer> avl = new AVLTree<Integer>();
 		
 		heightBST(bst, BSTHeight);
 		deleteAll(bst);
 		
-		sizeAVLTree(bst2, AVLNodes);
-		deleteAll(bst2);
+		sizeAVLTree(avl, AVLNodes);
+		deleteAll(avl);
 		
-		timeBST(bst, k);
-		timeAVL(bst2, k);
+		System.out.println();
 		
-		startTime = System.nanoTime();
-		for (int i = 0; i < k; i++) {
-			bst.contains(randomizer() );
-		}
-		endTime = System.nanoTime();
-		totalTime = (endTime - startTime) / 1000000.0;
-		System.out.println("Time to search " + k + " value in BST: " + totalTime + " milliseconds.");
+		for (int i = 0; i < 4; i++) {
+			timeBST(bst, k);
+			timeAVL(avl, k);
+			
+			System.out.println();
+			
+			startTime = System.nanoTime();
+			for (int x = 0; x < k; x++) {
+				bst.contains(randomizer() );
+			}
+			endTime = System.nanoTime();
+			totalTime = (endTime - startTime) / 1000000.0;
+			System.out.println("Time to search " + k + " value in BST: " + totalTime + " milliseconds.");
 
-		startTime = System.nanoTime();
-		for (int i = 0; i < k; i++) {
-			bst.contains(randomizer() );
+			startTime = System.nanoTime();
+			for (int x = 0; x < k; x++) {
+				bst.contains(randomizer() );
+			}
+			endTime = System.nanoTime();
+			totalTime = (endTime - startTime) / 1000000.0;
+			System.out.println("Time to search " + k + " value in AVL: " + totalTime + " milliseconds.");
+			System.out.println();
+			
+			k*=10;
 		}
-		endTime = System.nanoTime();
-		totalTime = (endTime - startTime) / 1000000.0;
-		System.out.println("Time to search " + k + " value in AVL: " + totalTime + " milliseconds.");
-
-		k*=10;
-		timeBST(bst, k);
-		timeAVL(bst2, k);
 		
-		startTime = System.nanoTime();
-		for (int i = 0; i < k; i++) {
-			bst.contains(randomizer() );
-		}
-		endTime = System.nanoTime();
-		totalTime = (endTime - startTime) / 1000000.0;
-		System.out.println("Time to search " + k + " value in BST: " + totalTime + " milliseconds.");
+		k = 100000;
 		
-		startTime = System.nanoTime();
-		for (int i = 0; i < k; i++) {
-			bst.contains(randomizer() );
+		for (int x = 0; x < 50; x++) {
+			BinarySearchTree<Integer> bstTime = new BinarySearchTree<Integer>();
+			AVLTree<Integer> avlTime = new AVLTree<Integer>();
+			avlTime.printRotations = false;
+			
+			for (int i = 0; i < k; i++) {
+				int choice = (int) (Math.random() + 0.5);
+				BSTTime += timeBSTInsert(bstTime, randomizer() , choice, k );
+				AVLTime += timeAVLInsert(avlTime, randomizer() , choice);
+			}
+			
+			System.out.println("Time to randomly insert or contain for BST: " + BSTTime);
+			System.out.println("Time to randomly insert or contain for AVL: " + AVLTime);
+			System.out.println();
+			BSTTime = 0;
+			AVLTime = 0;
+			avlTime.printRotations = true;
 		}
-		endTime = System.nanoTime();
-		totalTime = (endTime - startTime) / 1000000.0;
-		System.out.println("Time to search " + k + " value in AVL: " + totalTime + " milliseconds.");
-	
-		k*=10;
-		timeBST(bst, k);
-		timeAVL(bst2, k);
 		
-		startTime = System.nanoTime();
-		for (int i = 0; i < k; i++) {
-			bst.contains(randomizer() );
-		}
-		endTime = System.nanoTime();
-		totalTime = (endTime - startTime) / 1000000.0;
-		System.out.println("Time to search " + k + " value in BST: " + totalTime + " milliseconds.");
-
-		startTime = System.nanoTime();
-		for (int i = 0; i < k; i++) {
-			bst.contains(randomizer() );
-		}
-		endTime = System.nanoTime();
-		totalTime = (endTime - startTime) / 1000000.0;
-		System.out.println("Time to search " + k + " value in AVL: " + totalTime + " milliseconds.");
-
-		k*=10;
-		timeBST(bst, k);
-		timeAVL(bst2, k);
-		
-		startTime = System.nanoTime();
-		for (int i = 0; i < k; i++) {
-			bst.contains(randomizer() );
-		}
-		endTime = System.nanoTime();
-		totalTime = (endTime - startTime) / 1000000.0;
-		System.out.println("Time to search " + k + " value in BST: " + totalTime + " milliseconds.");
-	
-		startTime = System.nanoTime();
-		for (int i = 0; i < k; i++) {
-			bst.contains(randomizer() );
-		}
-		endTime = System.nanoTime();
-		totalTime = (endTime - startTime) / 1000000.0;
-		System.out.println("Time to search " + k + " value in AVL: " + totalTime + " milliseconds.");
-							
 	}
 }
