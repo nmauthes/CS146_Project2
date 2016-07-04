@@ -1,0 +1,1 @@
+The main is contained in the BSTvsAVL class. BinarySearchTree and AVLTree both use the BinaryNode class. The TreePrinter class was not modified.
